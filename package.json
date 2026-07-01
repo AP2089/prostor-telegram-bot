@@ -1,0 +1,27 @@
+{
+  "name": "prostor-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch app/index.ts",
+    "start": "tsx app/index.ts",
+    "lint": "eslint app",
+    "lint:fix": "eslint app --fix",
+    "format": "prettier --write app",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "grammy": "^1.36.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.39.4",
+    "husky": "^9.1.7",
+    "prettier": "^3.9.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.62.1"
+  }
+}
