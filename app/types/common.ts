@@ -12,6 +12,7 @@ export type Step =
   | 'contact:email'
   | 'contact:phone'
   | 'contact:message'
+  | 'ai:chat'
   | null;
 
 export interface SessionData {

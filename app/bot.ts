@@ -4,6 +4,7 @@ import { HTML, mainKb } from './helpers.js';
 import { registerCatalog } from './handlers/catalog.js';
 import { registerCart, handleOrderText, submitOrder } from './handlers/cart.js';
 import { registerContact, handleContactText } from './handlers/contact.js';
+import { registerAi, handleAiText } from './handlers/ai.js';
 
 export const bot = new Bot<Ctx>(process.env.BOT_TOKEN!);
 
@@ -21,6 +22,7 @@ bot.use(
 registerCatalog(bot);
 registerCart(bot);
 registerContact(bot);
+registerAi(bot);
 
 bot.command('start', async (ctx) => {
   ctx.session.step = null;
@@ -61,4 +63,5 @@ bot.on('message:text', async (ctx) => {
 
   if (step.startsWith('order:')) await handleOrderText(ctx, ctx.message.text.trim());
   else if (step.startsWith('contact:')) await handleContactText(ctx, ctx.message.text.trim());
+  else if (step === 'ai:chat') await handleAiText(ctx, ctx.message.text.trim());
 });

@@ -4,12 +4,32 @@ import type { Board, CartItem } from './api.js';
 export const fmt = (n: number) => n.toLocaleString('ru-RU') + ' ₽';
 export const HTML = { parse_mode: 'HTML' as const };
 
+/** Markdown → Telegram HTML */
+export function mdToHtml(md: string): string {
+  let text = md
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  text = text.replace(/```[\w]*\n?([\s\S]*?)```/g, '<pre>$1</pre>');
+  text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  text = text.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  text = text.replace(/__(.+?)__/g, '<b>$1</b>');
+  text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<i>$1</i>');
+  text = text.replace(/^#{1,6}\s+(.+)$/gm, '<b>$1</b>');
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  text = text.replace(/^[-*]\s+/gm, '• ');
+
+  return text;
+}
+
 export const mainKb = () =>
   new InlineKeyboard()
     .text('📋 Каталог', 'catalog')
     .text('🛒 Корзина', 'cart')
     .row()
-    .text('📞 Контакты', 'contacts');
+    .text('📞 Контакты', 'contacts')
+    .text('🤖 AI помощник', 'ai');
 
 export const backKb = () => new InlineKeyboard().text('← Главное меню', 'menu');
 

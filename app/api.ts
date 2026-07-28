@@ -15,6 +15,8 @@ export interface Board {
   name: string;
   subtitle: string;
   tagline: string;
+  category?: string;
+  categoryLabel?: string;
   price: number;
   oldPrice?: number;
   inStock: boolean;
@@ -22,7 +24,9 @@ export interface Board {
   volume: number;
   maxWeight: number;
   weight: number;
+  material?: string;
   features: string[];
+  description?: string;
   includes: string[];
 }
 
@@ -40,6 +44,12 @@ export interface ContactInfo {
   sub: string;
 }
 
+export interface ShopFeature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 export const getBoards = () => get<Board[]>('/boards');
 
 export const getBoardBySlug = (slug: string) =>
@@ -47,6 +57,8 @@ export const getBoardBySlug = (slug: string) =>
 
 export const getSettings = () =>
   get<{ contactInfo: ContactInfo[]; socials: string[] }>('/settings');
+
+export const getFeatures = () => get<ShopFeature[]>('/features');
 
 export const createOrder = (order: object) => post('/orders', order);
 
