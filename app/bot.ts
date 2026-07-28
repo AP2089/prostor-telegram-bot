@@ -4,7 +4,7 @@ import { HTML, mainKb } from './helpers.js';
 import { registerCatalog } from './handlers/catalog.js';
 import { registerCart, handleOrderText, submitOrder } from './handlers/cart.js';
 import { registerContact, handleContactText } from './handlers/contact.js';
-import { registerAi, handleAiText } from './handlers/ai.js';
+import { registerAi, handleAiText, enterAiChat } from './handlers/ai.js';
 
 export const bot = new Bot<Ctx>(process.env.BOT_TOKEN!);
 
@@ -25,6 +25,11 @@ registerContact(bot);
 registerAi(bot);
 
 bot.command('start', async (ctx) => {
+  if (ctx.match?.trim() === 'ai') {
+    await enterAiChat(ctx);
+    return;
+  }
+
   ctx.session.step = null;
   await ctx.reply('Добро пожаловать в <b>Prostor</b>! 🏄\n\nВыберите раздел:', {
     ...HTML,

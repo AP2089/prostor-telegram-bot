@@ -3,11 +3,15 @@ import { askAboutBoards } from '../gemini.js';
 import { cancelKb, backKb, mdToHtml, HTML } from '../helpers.js';
 import type { Ctx } from '../types/common.js';
 
+export async function enterAiChat(ctx: Ctx) {
+  ctx.session.step = 'ai:chat';
+  await ctx.reply('🤖 Задайте вопрос про сап-борды:', { reply_markup: cancelKb() });
+}
+
 export function registerAi(bot: Bot<Ctx>) {
   bot.callbackQuery('ai', async (ctx) => {
     await ctx.answerCallbackQuery();
-    ctx.session.step = 'ai:chat';
-    await ctx.reply('🤖 Задайте вопрос про сап-борды:', { reply_markup: cancelKb() });
+    await enterAiChat(ctx);
   });
 }
 
